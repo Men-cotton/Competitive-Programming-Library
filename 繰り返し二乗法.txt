@@ -1,8 +1,0 @@
-        const int mod = 1000000007;
-        public static long calc(long x, long pow)
-        {
-            if (pow == 0) return 1;
-            long a = calc(x, pow / 2);
-            a = a * a % mod;
-            return pow % 2 == 0 ? a % mod : a * x % mod;
-        }
