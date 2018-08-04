@@ -6,16 +6,16 @@ static bool IsOK(int index, int key)
 
 static int Binary_search(int key)
 {
-	int left = -1;
-	int right = arr.Count();
+	int ng = -1;
+	int ok = arr.Count();
 
-	while (right - left > 1)
+	while (ok - ng > 1)
 	{
-		int mid = left + (right - left) / 2;
+		int mid = ng + (ok - ng) / 2;
 
-		if (IsOK(mid, key)) right = mid;
-		else left = mid;
+		if (IsOK(mid, key)) ok = mid;
+		else ng = mid;
 	}
 
-	return right;
+	return ok;
 }
