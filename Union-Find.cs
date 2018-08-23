@@ -1,7 +1,7 @@
-﻿public class Unionfind
+public class Unionfind
 {
-	public static int[] par;//親
-	public static int[] rank; //深さ
+	private static int[] par;//親
+	private static int[] rank; //深さ
 	public void init(int n)//初期化
 	{
 		par = new int[n]; rank = new int[n];
