@@ -59,3 +59,16 @@ class Priority_queue
 		}
 	}
 }
+class Program
+{
+	static void Main(string[] args)
+	{
+		Priority_queue queue = new Priority_queue();
+
+		int[] x = new int[] { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 };
+		queue.init(x);
+
+		Console.WriteLine(queue.pop());
+
+	}
+}
