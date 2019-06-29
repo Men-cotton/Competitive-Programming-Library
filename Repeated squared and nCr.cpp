@@ -21,5 +21,6 @@ ll calc_div(ll a, ll b) {
 }
 
 ll calc_comb(ll n, ll r) {
+    if ((n == 0 && r > 0) || n < r)return 0;
     return calc_div(fact[n], fact[r] * fact[n - r] % mod);
 }
