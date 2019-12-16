@@ -18,14 +18,9 @@ struct status {
     bool operator>(const status &another) const { return cost > another.cost; };
 };
 
-
-int n;
-vector<vector<edge>> graph;
-vector<int> dis;
-
-void dijkstra(int s) {
+vector<int> dijkstra(int s, int n, vector<vector<edge>> &graph) {
     priority_queue<status, vector<status>, greater<>> que;
-    dis = vector<int>(n, 1145141919);
+    vector<int> dis(n, 1145141919);
     dis[s] = 0;
     que.push({0, s});
 
@@ -45,9 +40,9 @@ void dijkstra(int s) {
 }
 
 int main() {
-    int m;
+    int n, m;
     cin >> n >> m;
-    graph = vector<vector<edge>>(n);
+    vector<vector<edge>> graph(n);
     for (int i = 0; i < m; i++) {
         int from, to, cost;
         cin >> from >> to >> cost;
@@ -57,7 +52,7 @@ int main() {
 
     int start, end;
     cin >> start >> end;
-    dijkstra(start);
+    vector<int> dis = dijkstra(start, n, graph);
 
     cout << dis[end] << endl;
     return 0;
