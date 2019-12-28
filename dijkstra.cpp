@@ -18,9 +18,11 @@ struct status {
     bool operator>(const status &another) const { return cost > another.cost; };
 };
 
+const int INF = 1145141919;
+
 vector<int> dijkstra(int s, int n, vector<vector<edge>> &graph) {
     priority_queue<status, vector<status>, greater<>> que;
-    vector<int> dis(n, 1145141919);
+    vector<int> dis(n, INF);
     dis[s] = 0;
     que.push({0, s});
 
@@ -37,6 +39,8 @@ vector<int> dijkstra(int s, int n, vector<vector<edge>> &graph) {
             }
         }
     }
+    
+    return dis;
 }
 
 int main() {
