@@ -1,5 +1,6 @@
-ll MOD = 1e9 + 7;
+typedef long long ll;
 
+const ll MOD = 1e9 + 7;
 vector<ll> fact;
 
 void init_fact(int n) {
