@@ -1,13 +1,6 @@
 typedef long long ll;
 
 const ll MOD = 1e9 + 7;
-vector<ll> fact;
-
-void init_fact(int n) {
-    fact = vector<ll>(n);
-    fact[0] = 1;
-    for (int i = 1; i < n; i++) fact[i] = fact[i - 1] * i % MOD;
-}
 
 ll calc_pow(ll x, ll pow) {
     if (pow == 0) return 1;
@@ -19,6 +12,14 @@ ll calc_pow(ll x, ll pow) {
 
 ll calc_div(ll a, ll b) {
     return a * calc_pow(b, MOD - 2) % MOD;
+}
+
+vector<ll> fact;
+
+void init_fact(int n) {
+    fact = vector<ll>(n);
+    fact[0] = 1;
+    for (int i = 1; i < n; i++) fact[i] = fact[i - 1] * i % MOD;
 }
 
 ll calc_comb(ll n, ll r) {
