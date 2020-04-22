@@ -16,11 +16,11 @@ private:
     constexpr static int CALCULATE_IDENTITY_ELEMENT = INT_MAX;
     constexpr static bool IS_LAZY = true;
 
-    inline static void update(ll &x, ll y) { x = y; }
+    static void update(ll &x, ll y) { x = y; }
 
-    inline static ll calculate(ll x, ll y) { return min(x, y); }
+    static ll calculate(ll x, ll y) { return min(x, y); }
 
-    inline void evaluation(int index, int nowL, int nowR) {
+    void evaluation(int index, int nowL, int nowR) {
         if (changed[index]) {
             update(data[index], lazy[index]); // TODO Change updating
             if (nowR - nowL > 1) {
@@ -53,9 +53,9 @@ private:
         for (int i = n - 1; i > 0; i--)data[i] = children(i);
     }
 
-    inline ll children(int index) { return calculate(data[index * 2], data[index * 2 + 1]); }
+    ll children(int index) { return calculate(data[index * 2], data[index * 2 + 1]); }
 
-    inline void update_point(int index, int value) {
+    void update_point(int index, int value) {
         index += n;
         update(data[index], value);
         while (index > 1) {
@@ -64,7 +64,7 @@ private:
         }
     }
 
-    inline void update_range(int wantL, int wantR, ll value, int index, int nowL, int nowR) {
+    void update_range(int wantL, int wantR, ll value, int index, int nowL, int nowR) {
         evaluation(index, nowL, nowR);
 
         if (nowR <= wantL || wantR <= nowL)return;
@@ -80,7 +80,7 @@ private:
         }
     }
 
-    inline ll query(int wantL, int wantR, int index, int nowL, int nowR) {
+    ll query(int wantL, int wantR, int index, int nowL, int nowR) {
         if (nowR <= wantL || wantR <= nowL)return CALCULATE_IDENTITY_ELEMENT;
 
         if (IS_LAZY)evaluation(index, nowL, nowR);
@@ -101,21 +101,21 @@ public:
 
     SegmentTree(vector<ll> &v) { initialize(v.size(), v); }
 
-    inline void update(int index, ll value) {
+    void update(int index, ll value) {
         if (IS_LAZY) update(index, index + 1, value);
         else update_point(index, value);
     }
 
-    inline void update(int indexL, int indexR, ll value) {
+    void update(int indexL, int indexR, ll value) {
         if (IS_LAZY) update_range(indexL, indexR, value, 1, 0, n);
         else {
             for (int i = indexL; i < indexR; i++)update(i, value);
         }
     }
 
-    inline ll get(int index) { return get(index, index + 1); }
+    ll get(int index) { return get(index, index + 1); }
 
-    inline ll get(int indexL, int indexR) { return query(indexL, indexR, 1, 0, n); }
+    ll get(int indexL, int indexR) { return query(indexL, indexR, 1, 0, n); }
 };
 
 int main() {
