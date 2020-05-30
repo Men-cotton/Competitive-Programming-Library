@@ -1,29 +1,20 @@
-class Unionfind {
-    vector<int> par; //親
-    vector<int> rank; //深さ
-public:
-    void init(int n)//初期化
-    {
-        par = vector<int>(n);
-        rank = vector<int>(n);
-        for (int i = 0; i < n; i++) {
-            par[i] = i;
-            rank[i] = 0;
-        }
+struct Unionfind {
+    vector<int> par;
+    vector<int> rank;
+
+    void init(int n) {
+        par.resize(n);
+        rank.resize(n);
+        for (int i = 0; i < n; i++) par[i] = i;
     }
 
-public:
-    int root(int x)//根を求める
-    {
+    int root(int x) {
         if (par[x] == x) return x;
         else return par[x] = root(par[x]);
     }
 
-public:
-    void unite(int x, int y)//集合を併合
-    {
-        x = root(x);
-        y = root(y);
+    void unite(int x, int y) {
+        x = root(x), y = root(y);
         if (x == y) return;
         else {
             if (rank[x] < rank[y]) par[x] = y;
@@ -34,9 +25,5 @@ public:
         }
     }
 
-public:
-    bool issame(int x, int y)//同じ集合に属しているか
-    {
-        return root(x) == root(y);
-    }
+    bool issame(int x, int y) { return root(x) == root(y); }
 };
