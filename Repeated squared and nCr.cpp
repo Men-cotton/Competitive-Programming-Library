@@ -1,6 +1,6 @@
-typedef long long ll;
+using ll = long long;
 
-constexpr ll MOD = 1e9 + 7;
+const ll MOD = 1e9 + 7;
 
 ll calc_pow(ll x, ll pow) {
     if (pow == 0) return 1;
