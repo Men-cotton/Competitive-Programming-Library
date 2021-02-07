@@ -1,6 +1,6 @@
 struct pos {
     int x, y;
-    pos operator+(pos &rhs) const {
+    pos operator+(const pos &rhs) const {
         return {x + rhs.x, y + rhs.y};
     }
     pos &operator+=(const pos &rhs) {
