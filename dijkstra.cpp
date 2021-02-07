@@ -32,8 +32,8 @@ vector<int> dijkstra(int s, int n, vector<vector<edge>> &graph) {
         if (dis[now.v] < now.cost)continue;
 
         for (auto next:graph[now.v]) {
-            if (dis[next.to] > dis[now.v] + next.cost) {
-                dis[next.to] = dis[now.v] + next.cost;
+            if (dis[next.to] > now.cost + next.cost) {
+                dis[next.to] = now.cost + next.cost;
                 que.push({dis[next.to], next.to});
             }
         }
