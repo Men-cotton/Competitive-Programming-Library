@@ -55,7 +55,7 @@ private:
 
     ll children(int index) { return calculate(data[index * 2], data[index * 2 + 1]); }
 
-    void update_point(int index, int value) {
+    void update_point(int index, ll value) {
         index += n;
         update(data[index], value);
         while (index > 1) {
