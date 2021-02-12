@@ -7,18 +7,19 @@
 using namespace std;
 typedef long long ll;
 
+template<typename T>
 struct SegmentTree {
 private:
     //////////////////////
     // TODO Change them //
     //////////////////////
-    constexpr static int UPDATE_IDENTITY_ELEMENT = 0;
-    constexpr static int CALCULATE_IDENTITY_ELEMENT = INT_MAX;
+    constexpr static T UPDATE_IDENTITY_ELEMENT = 0;
+    constexpr static T CALCULATE_IDENTITY_ELEMENT = INT_MAX;
     constexpr static bool IS_LAZY = true;
 
-    static void update(ll &x, ll y) { x = y; }
+    static void update(T &x, T y) { x = y; }
 
-    static ll calculate(ll x, ll y) { return min(x, y); }
+    static T calculate(T x, T y) { return min(x, y); }
 
     void evaluation(int index, int nowL, int nowR) {
         if (changed[index]) {
@@ -36,11 +37,11 @@ private:
 
 
     int n;
-    vector<ll> data;
-    vector<ll> lazy;
+    vector<T> data;
+    vector<T> lazy;
     vector<bool> changed;
 
-    void initialize(int size, vector<ll> &v) {
+    void initialize(int size, vector<T> &v) {
         n = 1;
         while (n < size)n <<= 1;
         data.resize(2 * n);
@@ -53,9 +54,9 @@ private:
         for (int i = n - 1; i > 0; i--)data[i] = children(i);
     }
 
-    ll children(int index) { return calculate(data[index * 2], data[index * 2 + 1]); }
+    T children(int index) { return calculate(data[index * 2], data[index * 2 + 1]); }
 
-    void update_point(int index, ll value) {
+    void update_point(int index, T value) {
         index += n;
         update(data[index], value);
         while (index > 1) {
@@ -64,7 +65,7 @@ private:
         }
     }
 
-    void update_range(int wantL, int wantR, ll value, int index, int nowL, int nowR) {
+    void update_range(int wantL, int wantR, T value, int index, int nowL, int nowR) {
         evaluation(index, nowL, nowR);
 
         if (nowR <= wantL || wantR <= nowL)return;
@@ -80,48 +81,48 @@ private:
         }
     }
 
-    ll query(int wantL, int wantR, int index, int nowL, int nowR) {
+    T query(int wantL, int wantR, int index, int nowL, int nowR) {
         if (nowR <= wantL || wantR <= nowL)return CALCULATE_IDENTITY_ELEMENT;
 
         if (IS_LAZY)evaluation(index, nowL, nowR);
         if (wantL <= nowL && nowR <= wantR) return data[index];
         else {
             int mid = (nowL + nowR) / 2;
-            ll valueL = query(wantL, wantR, index * 2, nowL, mid);
-            ll valueR = query(wantL, wantR, index * 2 + 1, mid, nowR);
+            T valueL = query(wantL, wantR, index * 2, nowL, mid);
+            T valueR = query(wantL, wantR, index * 2 + 1, mid, nowR);
             return calculate(valueL, valueR);
         }
     }
 
 public:
-    SegmentTree(int size, ll value) {
-        vector<ll> tmp(size, value);
+    SegmentTree(int size, T value) {
+        vector<T> tmp(size, value);
         initialize(size, tmp);
     }
 
-    SegmentTree(vector<ll> &v) { initialize(v.size(), v); }
+    SegmentTree(vector<T> &v) { initialize(v.size(), v); }
 
-    void update(int index, ll value) {
+    void update(int index, T value) {
         if (IS_LAZY) update(index, index + 1, value);
         else update_point(index, value);
     }
 
-    void update(int indexL, int indexR, ll value) {
+    void update(int indexL, int indexR, T value) {
         if (IS_LAZY) update_range(indexL, indexR, value, 1, 0, n);
         else {
             for (int i = indexL; i < indexR; i++)update(i, value);
         }
     }
 
-    ll get(int index) { return get(index, index + 1); }
+    T get(int index) { return get(index, index + 1); }
 
-    ll get(int indexL, int indexR) { return query(indexL, indexR, 1, 0, n); }
+    T get(int indexL, int indexR) { return query(indexL, indexR, 1, 0, n); }
 };
 
 int main() {
     int n, q;
     cin >> n >> q;
-    SegmentTree seg(n, INT_MAX);
+    SegmentTree<ll> seg(n, INT_MAX);
     for (int i = 0; i < q; i++) {
         int com;
         cin >> com;
@@ -135,5 +136,4 @@ int main() {
             cout << seg.get(s, t + 1) << endl;
         }
     }
-    return 0;
 }
